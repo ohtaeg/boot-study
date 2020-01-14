@@ -5,11 +5,12 @@ import me.ohtaeg.api.dto.BlogRequest;
 import me.ohtaeg.api.dto.SearchWord;
 import me.ohtaeg.domain.response.Blog;
 import me.ohtaeg.domain.repository.SearchRepository;
+import me.ohtaeg.domain.response.OpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BlogService implements SearchService<Blog>{
+public class BlogService implements SearchService {
     @Autowired
     private NaverApiProperties naverApiProperties; // TODO : Refcator
     private SearchRepository searchRepository;
@@ -19,8 +20,9 @@ public class BlogService implements SearchService<Blog>{
     }
 
     @Override
-    public Blog search(final SearchWord request) {
-        Blog blog = new Blog((BlogRequest)request, naverApiProperties.getUrl());
-        return (Blog) searchRepository.search(blog);
+    public OpenApi search(final SearchWord request) {
+        BlogRequest blogRequest = (BlogRequest)request;
+        Blog blog = new Blog(blogRequest, naverApiProperties.getUrl());
+        return searchRepository.search(blog);
     }
 }
