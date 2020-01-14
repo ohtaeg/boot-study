@@ -1,16 +1,13 @@
 package me.ohtaeg.infra;
 
 import config.NaverApiProperties;
-import me.ohtaeg.api.dto.SearchWord;
 import me.ohtaeg.domain.response.Blog;
-import me.ohtaeg.domain.search.repository.SearchRepository;
+import me.ohtaeg.domain.repository.SearchRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
 
 @Repository
 public class BlogRepository implements SearchRepository<Blog> {
@@ -25,13 +22,11 @@ public class BlogRepository implements SearchRepository<Blog> {
     }
 
     @Override
-    public ResponseEntity<Blog> search(final SearchWord searchWord) {
-        UriComponents uriComponents = getUriBuilder(naverApiProperties.getUrl(), searchWord);
+    public Blog search(final Blog blog) {
         HttpHeaders httpHeaders = getHeader(naverApiProperties.getClientId(), naverApiProperties.getClientSecret());
-
-        return restTemplate.exchange(uriComponents.toUriString()
-                                      , HttpMethod.GET
-                                      , new HttpEntity<>(httpHeaders)
-                                      , Blog.class);
+        return restTemplate.exchange(blog.getUri()
+                , HttpMethod.GET
+                , new HttpEntity<>(httpHeaders)
+                , blog.getClass()).getBody();
     }
 }
