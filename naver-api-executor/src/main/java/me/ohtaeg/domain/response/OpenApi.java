@@ -3,10 +3,6 @@ package me.ohtaeg.domain.response;
 import java.util.List;
 
 public abstract class OpenApi {
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-//    LocalDateTime lastBuildDate;
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-//    LocalDateTime postdate;
     Integer total;
     Integer display;
     List<Item> items;
@@ -58,22 +54,6 @@ public abstract class OpenApi {
             this.bloggerlink = bloggerlink;
         }
     }
-
-//    public LocalDateTime getLastBuildDate() {
-//        return lastBuildDate;
-//    }
-//
-//    public void setLastBuildDate(final LocalDateTime lastBuildDate) {
-//        this.lastBuildDate = lastBuildDate;
-//    }
-//
-//    public LocalDateTime getPostdate() {
-//        return postdate;
-//    }
-//
-//    public void setPostdate(final LocalDateTime postdate) {
-//        this.postdate = postdate;
-//    }
 
     public Integer getTotal() {
         return total;
