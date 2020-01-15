@@ -1,6 +1,11 @@
 package me.ohtaeg.domain.response;
 
 
-public class Movie extends OpenApi {
-    // TODO
+import me.ohtaeg.api.dto.SearchWord;
+
+public class Movie extends SearchApi {
+    @Override
+    String createUri(final SearchWord searchWord) {
+        return null;
+    }
 }
