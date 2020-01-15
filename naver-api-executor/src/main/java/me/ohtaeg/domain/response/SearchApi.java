@@ -1,15 +1,18 @@
 package me.ohtaeg.domain.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import me.ohtaeg.api.dto.SearchWord;
 
 import java.util.List;
 
-public abstract class OpenApi {
+public abstract class SearchApi {
     @JsonIgnore
     String uri;
     Integer total;
     Integer display;
     List<Item> items;
+
+    abstract String createUri(SearchWord searchWord);
 
     private static class Item {
         String title;
