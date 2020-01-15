@@ -5,7 +5,7 @@ import org.springframework.http.HttpHeaders;
 
 public interface SearchRepository {
 
-    SearchApi search(SearchApi searchApi, final Class<? extends SearchApi> movieClass);
+    SearchApi search(SearchApi searchApi, final Class<? extends SearchApi> returnType);
 
     default HttpHeaders getHeader(String id, String secret) {
         HttpHeaders httpHeaders = new HttpHeaders();
