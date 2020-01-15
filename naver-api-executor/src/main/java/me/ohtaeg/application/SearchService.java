@@ -1,8 +1,8 @@
 package me.ohtaeg.application;
 
 import me.ohtaeg.api.dto.SearchWord;
-import me.ohtaeg.domain.response.OpenApi;
+import me.ohtaeg.domain.response.SearchApi;
 
 public interface SearchService {
-    OpenApi search(SearchWord searchWord);
+    SearchApi search(SearchWord searchWord);
 }
