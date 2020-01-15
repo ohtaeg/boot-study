@@ -1,6 +1,7 @@
 package me.ohtaeg.infra;
 
 import me.ohtaeg.domain.repository.SearchRepository;
+import me.ohtaeg.domain.response.Movie;
 import me.ohtaeg.domain.response.SearchApi;
 import me.ohtaeg.util.PropertyUtils;
 import org.springframework.http.HttpEntity;
@@ -19,11 +20,11 @@ public class ApiDao implements SearchRepository {
     }
 
     @Override
-    public SearchApi search(final SearchApi searchApi) {
+    public SearchApi search(final SearchApi searchApi, final Class<? extends SearchApi> clazz) {
         HttpHeaders httpHeaders = getHeader(PropertyUtils.getClientId(), PropertyUtils.getSecret());
         return restTemplate.exchange(searchApi.getUri()
                 , HttpMethod.GET
                 , new HttpEntity<>(httpHeaders)
-                , searchApi.getClass()).getBody();
+                , clazz).getBody();
     }
 }
