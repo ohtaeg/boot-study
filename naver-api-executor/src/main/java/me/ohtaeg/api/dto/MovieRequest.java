@@ -1,6 +1,6 @@
 package me.ohtaeg.api.dto;
 
-public class MovieRequest extends SearchWord{
+public class MovieRequest extends SearchWord {
     private String genre;
     private String country;
     private int yearfrom;
