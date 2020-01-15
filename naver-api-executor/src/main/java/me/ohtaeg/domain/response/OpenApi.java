@@ -1,8 +1,12 @@
 package me.ohtaeg.domain.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public abstract class OpenApi {
+    @JsonIgnore
+    String uri;
     Integer total;
     Integer display;
     List<Item> items;
@@ -53,6 +57,14 @@ public abstract class OpenApi {
         public void setBloggerlink(final String bloggerlink) {
             this.bloggerlink = bloggerlink;
         }
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(final String uri) {
+        this.uri = uri;
     }
 
     public Integer getTotal() {
