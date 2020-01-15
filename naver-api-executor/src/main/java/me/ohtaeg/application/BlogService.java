@@ -1,6 +1,5 @@
 package me.ohtaeg.application;
 
-import me.ohtaeg.api.dto.BlogRequest;
 import me.ohtaeg.api.dto.SearchWord;
 import me.ohtaeg.domain.repository.SearchRepository;
 import me.ohtaeg.domain.response.Blog;
@@ -17,8 +16,7 @@ public class BlogService implements SearchService {
     }
 
     @Override
-    public SearchApi search(final SearchWord request) {
-        BlogRequest blogRequest = (BlogRequest)request;
-        return searchRepository.search(new Blog(blogRequest));
+    public SearchApi search(final SearchWord searchWord) {
+        return searchRepository.search(new Blog(searchWord), Blog.class);
     }
 }
