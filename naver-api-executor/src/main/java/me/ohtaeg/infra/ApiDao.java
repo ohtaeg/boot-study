@@ -1,8 +1,8 @@
 package me.ohtaeg.infra;
 
-import config.NaverApiProperties;
 import me.ohtaeg.domain.repository.SearchRepository;
-import me.ohtaeg.domain.response.OpenApi;
+import me.ohtaeg.domain.response.SearchApi;
+import me.ohtaeg.util.PropertyUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,21 +12,18 @@ import org.springframework.web.client.RestTemplate;
 @Repository
 public class ApiDao implements SearchRepository {
 
-    // TODO : refactoring - Repository가 properties와 restTemplate를 갖고있는게 맞을까?
-    private NaverApiProperties naverApiProperties;
     private RestTemplate restTemplate;
 
-    public ApiDao(NaverApiProperties naverApiProperties, RestTemplate restTemplate) {
-        this.naverApiProperties = naverApiProperties;
+    public ApiDao(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     @Override
-    public OpenApi search(final OpenApi openApi) {
-        HttpHeaders httpHeaders = getHeader(naverApiProperties.getClientId(), naverApiProperties.getClientSecret());
-        return restTemplate.exchange(openApi.getUri()
+    public SearchApi search(final SearchApi searchApi) {
+        HttpHeaders httpHeaders = getHeader(PropertyUtils.getClientId(), PropertyUtils.getSecret());
+        return restTemplate.exchange(searchApi.getUri()
                 , HttpMethod.GET
                 , new HttpEntity<>(httpHeaders)
-                , openApi.getClass()).getBody();
+                , searchApi.getClass()).getBody();
     }
 }
