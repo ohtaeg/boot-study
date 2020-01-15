@@ -6,18 +6,70 @@ import me.ohtaeg.domain.response.constant.RequestVariableName;
 import me.ohtaeg.util.PropertyUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.Serializable;
+import java.util.List;
 
-public class Blog extends SearchApi implements Serializable {
-
-    private static final long serialVersionUID = 1576360151347505333L;
+public class Blog extends SearchApi {
     private static final String SEARCH_RESOURCE = "/blog";
+    private List<Item> items;
 
-    public Blog() {
+    public Blog() { }
+    public Blog(final SearchWord searchWord) {
+        super.uri = createUri(searchWord);
     }
 
-    public Blog(final BlogRequest blogRequest) {
-        super.uri = createUri(blogRequest);
+    private static class Item {
+        String title;
+        String link;
+        String description;
+        String bloggername;
+        String bloggerlink;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(final String title) {
+            this.title = title;
+        }
+
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(final String link) {
+            this.link = link;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(final String description) {
+            this.description = description;
+        }
+
+        public String getBloggername() {
+            return bloggername;
+        }
+
+        public void setBloggername(final String bloggername) {
+            this.bloggername = bloggername;
+        }
+
+        public String getBloggerlink() {
+            return bloggerlink;
+        }
+
+        public void setBloggerlink(final String bloggerlink) {
+            this.bloggerlink = bloggerlink;
+        }
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+    public void setItems(final List<Item> items) {
+        this.items = items;
     }
 
     @Override
