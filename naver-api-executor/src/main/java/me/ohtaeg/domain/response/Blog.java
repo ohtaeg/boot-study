@@ -4,17 +4,43 @@ import me.ohtaeg.api.dto.BlogRequest;
 import me.ohtaeg.api.dto.SearchWord;
 import me.ohtaeg.domain.response.constant.RequestVariableName;
 import me.ohtaeg.util.PropertyUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Blog extends SearchApi {
+public class Blog extends SearchApi implements Limitable {
     private static final String SEARCH_RESOURCE = "/blog";
     private List<Item> items;
 
     public Blog() { }
     public Blog(final SearchWord searchWord) {
-        super.uri = createUri(searchWord);
+        super.uri= createUri(searchWord);
+    }
+
+    @Override
+    String createUri(final SearchWord searchWord) {
+        BlogRequest blogRequest = (BlogRequest) searchWord;
+        return UriComponentsBuilder.fromHttpUrl(PropertyUtils.getUrl() + SEARCH_RESOURCE)
+                .queryParam(RequestVariableName.QUERY.getName(), blogRequest.getQuery())
+                .queryParam(RequestVariableName.DISPLAY.getName(), blogRequest.getDisplay())
+                .queryParam(RequestVariableName.START.getName(), blogRequest.getStart())
+                .queryParam(RequestVariableName.SORT.getName(), blogRequest.getSort())
+                .build().toUriString();
+    }
+
+    //TODO : Refactoring.. 여기서 구현하는게 맞을까, item을 별도로 추상화 해야할듯함.
+    @Override
+    public void limit(final int length) {
+        if (CollectionUtils.isEmpty(items) || length == 0) {
+            return;
+        }
+
+        super.limitLength = length;
+        this.items = items.stream()
+                          .limit(length)
+                          .collect(Collectors.toList());
     }
 
     private static class Item {
@@ -70,16 +96,5 @@ public class Blog extends SearchApi {
     }
     public void setItems(final List<Item> items) {
         this.items = items;
-    }
-
-    @Override
-    String createUri(final SearchWord searchWord) {
-        BlogRequest blogRequest = (BlogRequest) searchWord;
-        return UriComponentsBuilder.fromHttpUrl(PropertyUtils.getUrl() + SEARCH_RESOURCE)
-                .queryParam(RequestVariableName.QUERY.getName(), blogRequest.getQuery())
-                .queryParam(RequestVariableName.DISPLAY.getName(), blogRequest.getDisplay())
-                .queryParam(RequestVariableName.START.getName(), blogRequest.getStart())
-                .queryParam(RequestVariableName.SORT.getName(), blogRequest.getSort())
-                .build().toUriString();
     }
 }

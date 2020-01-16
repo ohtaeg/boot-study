@@ -5,11 +5,13 @@ import me.ohtaeg.api.dto.MovieRequest;
 import me.ohtaeg.api.dto.SearchWord;
 import me.ohtaeg.domain.response.constant.RequestVariableName;
 import me.ohtaeg.util.PropertyUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Movie extends SearchApi {
+public class Movie extends SearchApi implements Limitable {
     private static final String SEARCH_RESOURCE = "/movie";
     private List<Item> items;
 
@@ -17,6 +19,28 @@ public class Movie extends SearchApi {
 
     public Movie(final SearchWord searchWord) {
         super.uri = createUri(searchWord);
+    }
+
+    @Override
+    String createUri(final SearchWord searchWord) {
+        MovieRequest movieRequest = (MovieRequest) searchWord;
+        return UriComponentsBuilder.fromHttpUrl(PropertyUtils.getUrl() + SEARCH_RESOURCE)
+                .queryParam(RequestVariableName.QUERY.getName(), movieRequest.getQuery())
+                .queryParam(RequestVariableName.DISPLAY.getName(), movieRequest.getDisplay())
+                .queryParam(RequestVariableName.START.getName(), movieRequest.getStart())
+                .build().toUriString();
+    }
+
+    @Override
+    public void limit(final int length) {
+        if (CollectionUtils.isEmpty(items) || length == 0) {
+            return;
+        }
+
+        super.limitLength = length;
+        this.items = items.stream()
+                .limit(length)
+                .collect(Collectors.toList());
     }
 
     private static class Item {
@@ -72,15 +96,5 @@ public class Movie extends SearchApi {
     }
     public void setItems(final List<Item> items) {
         this.items = items;
-    }
-
-    @Override
-    String createUri(final SearchWord searchWord) {
-        MovieRequest movieRequest = (MovieRequest) searchWord;
-        return UriComponentsBuilder.fromHttpUrl(PropertyUtils.getUrl() + SEARCH_RESOURCE)
-                .queryParam(RequestVariableName.QUERY.getName(), movieRequest.getQuery())
-                .queryParam(RequestVariableName.DISPLAY.getName(), movieRequest.getDisplay())
-                .queryParam(RequestVariableName.START.getName(), movieRequest.getStart())
-                .build().toUriString();
     }
 }

@@ -3,11 +3,14 @@ package me.ohtaeg.domain.response;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.ohtaeg.api.dto.SearchWord;
 
+import java.util.List;
+
 public abstract class SearchApi {
     @JsonIgnore
-    String uri;
-    Integer total;
-    Integer display;
+    protected String uri;
+    protected Integer total;
+    protected Integer display;
+    protected int limitLength = 0;
 
     abstract String createUri(SearchWord searchWord);
 
@@ -15,23 +18,15 @@ public abstract class SearchApi {
         return uri;
     }
 
-    public void setUri(final String uri) {
-        this.uri = uri;
-    }
-
     public Integer getTotal() {
         return total;
-    }
-
-    public void setTotal(final Integer total) {
-        this.total = total;
     }
 
     public Integer getDisplay() {
         return display;
     }
 
-    public void setDisplay(final Integer display) {
-        this.display = display;
+    public int getLimitLength() {
+        return limitLength;
     }
 }
