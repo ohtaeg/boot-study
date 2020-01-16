@@ -16,7 +16,8 @@ public class MovieService implements SearchService {
     }
 
     @Override
-    public SearchApi search(final SearchWord searchWord) {
-        return searchRepository.search(new Movie(searchWord), Movie.class);
+    public Movie search(final SearchWord searchWord) {
+        Movie searchedMovie = (Movie) searchRepository.search(new Movie(searchWord), Movie.class);
+        return searchedMovie;
     }
 }
