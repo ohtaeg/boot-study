@@ -1,5 +1,5 @@
 ## blog api full paramter call
-GET http://localhost:8080/api/blog?query=스프링부트&display=1&start=1&sort=date
+GET http://localhost:8080/api/blog?query=스프링부트&display=3&start=1&sort=date
 ###
 
 ## blog api each paramter call

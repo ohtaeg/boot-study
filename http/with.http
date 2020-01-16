@@ -1,4 +1,8 @@
 ## blog + movie api call
+GET http://localhost:8080/api/with?query=어벤져스&display=3&start=1
+###
+
+## blog + movie api call
 GET http://localhost:8080/api/with?query=어벤져스
 ###
 
