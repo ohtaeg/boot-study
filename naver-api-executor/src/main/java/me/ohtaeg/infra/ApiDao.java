@@ -1,7 +1,6 @@
 package me.ohtaeg.infra;
 
 import me.ohtaeg.domain.repository.SearchRepository;
-import me.ohtaeg.domain.response.Movie;
 import me.ohtaeg.domain.response.SearchApi;
 import me.ohtaeg.util.PropertyUtils;
 import org.springframework.http.HttpEntity;
