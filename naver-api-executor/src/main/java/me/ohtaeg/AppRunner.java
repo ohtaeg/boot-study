@@ -1,7 +1,7 @@
 package me.ohtaeg;
 
 import config.NaverApiProperties;
-import me.ohtaeg.config.SomeThing;
+import me.ohtaeg.config.RestTemplateProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,12 +18,12 @@ public class AppRunner implements ApplicationRunner, ApplicationListener<Servlet
     NaverApiProperties naverApiProperties;
 
     @Autowired
-    SomeThing someThing;
+    RestTemplateProperties restTemplateProperties;
 
     @Override
     public void run(final ApplicationArguments args) {
         System.out.println("clientId : " + naverApiProperties.getClientId());
-        System.out.println("test something : " + someThing.getName());
+        System.out.println("rest template :" + restTemplateProperties.getConnectionTimeout());
     }
 
     @Override
