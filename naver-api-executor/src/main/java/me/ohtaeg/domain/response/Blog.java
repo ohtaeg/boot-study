@@ -26,7 +26,7 @@ public class Blog extends SearchApi implements Limitable {
     @Override
     String createUri(final SearchWord searchWord) {
         BlogRequest blogRequest = (BlogRequest) searchWord;
-        return UriComponentsBuilder.fromHttpUrl(PropertyUtils.getUrl() + SEARCH_RESOURCE)
+        return UriComponentsBuilder.fromHttpUrl(PropertyUtils.getInstance().getUrl() + SEARCH_RESOURCE)
                 .queryParam(RequestVariableName.QUERY.getName(), blogRequest.getQuery())
                 .queryParam(RequestVariableName.DISPLAY.getName(), blogRequest.getDisplay())
                 .queryParam(RequestVariableName.START.getName(), blogRequest.getStart())

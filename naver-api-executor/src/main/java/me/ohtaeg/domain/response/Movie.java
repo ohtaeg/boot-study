@@ -27,7 +27,7 @@ public class Movie extends SearchApi implements Limitable {
     @Override
     String createUri(final SearchWord searchWord) {
         MovieRequest movieRequest = (MovieRequest) searchWord;
-        return UriComponentsBuilder.fromHttpUrl(PropertyUtils.getUrl() + SEARCH_RESOURCE)
+        return UriComponentsBuilder.fromHttpUrl(PropertyUtils.getInstance().getUrl() + SEARCH_RESOURCE)
                 .queryParam(RequestVariableName.QUERY.getName(), movieRequest.getQuery())
                 .queryParam(RequestVariableName.DISPLAY.getName(), movieRequest.getDisplay())
                 .queryParam(RequestVariableName.START.getName(), movieRequest.getStart())
