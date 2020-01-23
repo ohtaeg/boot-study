@@ -1,6 +1,6 @@
 package me.ohtaeg.application;
 
-import me.ohtaeg.api.dto.SearchWord;
+import me.ohtaeg.api.dto.request.SearchWord;
 import me.ohtaeg.domain.repository.SearchRepository;
 import me.ohtaeg.domain.response.Movie;
 import org.springframework.stereotype.Service;
