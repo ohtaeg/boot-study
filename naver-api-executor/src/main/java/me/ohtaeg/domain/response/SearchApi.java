@@ -3,8 +3,6 @@ package me.ohtaeg.domain.response;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import me.ohtaeg.api.dto.SearchWord;
 
-import java.util.List;
-
 public abstract class SearchApi {
     @JsonIgnore
     protected String uri;
