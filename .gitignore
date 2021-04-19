@@ -32,3 +32,5 @@ out/
 .vscode/
 /gradlew.bat
 /gradlew
+
+naver-api-autoconfigure/src/main/resources/api.properties
