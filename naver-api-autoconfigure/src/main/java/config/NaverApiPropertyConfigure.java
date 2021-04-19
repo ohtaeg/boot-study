@@ -10,7 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @EnableConfigurationProperties(NaverApiProperties.class)
 @PropertySource("classpath:api.properties")
-public class NaverApiPropertyAutoConfigure {
+public class NaverApiPropertyConfigure {
 
     @Bean
     @ConditionalOnMissingBean

@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  config.NaverApiPropertyAutoConfigure
+  config.NaverApiPropertyConfigure,\
+  example.HolmanConfiguration
