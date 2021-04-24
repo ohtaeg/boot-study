@@ -11,14 +11,15 @@
 ## Mission
 - 1주차 미션 : [네이버 Open API 연동 및 컨텐츠 API 구현](https://github.com/ohtaeg/boot-study-friday/blob/master/docs/mission1.md)
 - 2주차 미션 : [2주차 미션](https://github.com/ohtaeg/boot-study-friday/blob/master/docs/mission2.md)
+
 <br>
 
 ## I learn
 ### @SpringBootApplication
 - @SpringBootConfiguration
 - @ComponentScan
-- @EnableAutoConfiguration <br>
-@SpringBootApplication 어노테이션은 위 3가지의 어노테이션을 사용하는것과 같다.
+- @EnableAutoConfiguration <br> <br>
+**@SpringBootApplication 어노테이션은 위 3가지의 어노테이션을 사용하는것과 같다.**
 
 ### @EnableAutoConfiguration
 - 어플리케이션 등록시, 빈을 두 단계를 거쳐 등록 한다.
@@ -95,9 +96,14 @@ org.springframework.boot:spring-boot-autoconfigure Library 안의 META-INF/sprin
 - 만약 @ComponentScan과 @EnableAutoConfigure가 같은 빈을 등록한다면 @ComponentScan 때 등록한 빈을 @EnableAutoConfigure가 덮어 씌울 것이다. <br>
   덮어쓰는 걸 방지하려면 @ConditionalOnMissingBean를 통해 빈을 등록 못했을때 등록하도록 설정해준다.
 
-#### 내장 웹서버
-- 내장 서블릿 컨테이너도 자동설정의 일부분이다.
+<br>
+<br>
+
+---------
+
+## 내장 웹서버
 - 스프링 부트는 내장 서블릿 컨테이너를 쉽게 사용할수 있게, 스프링 프레임워크를 쉽게 사용할 수 있게하는 Tool이다.
+- 내장 서블릿 컨테이너도 자동설정의 일부분이다.
 - 자바로 내장 웹서버인 톰캣 객체를 생성할 수 있다.
 <pre>
     <code>Tomcat tomcat = new Tomcat(); // 톰캣 객체 생성</code>
@@ -122,16 +128,23 @@ org.springframework.boot:spring-boot-autoconfigure Library 안의 META-INF/sprin
     <code>context.addServletMappingDecoded("/api", servletName); // 컨텍스트에 서블릿 매핑</code>
     <code>tomcat.getConnector();</code>
     <code>tomcat.start(); // 톰캣 실행</code>
-    <code>tomcat.getServer().await(); // 톰캣 대기</code>
+    <code>tomcat.getServer().await(); // 톰캣 요청 대기</code>
 </pre>
 
-- 다만 별도의 서블릿들을 다 정의해야 되기 때문에 이런 과정을 설정하고 실행하게 해주는 것이 스프링 부트의 기능 중 하나이다.
-- 그렇다면 위 소스코드 처럼 was 설정은 어디에 있고 어떤 원리로 스프링 부트가 실행할 수 있는건가?
-    - 위에서 배웠던 @AutoConfigure를 통해 자동 설정이 된다.
-    - org.springframework.boot:spring-boot-autoconfigure Library META-INF/spring.factories <br>
-    ㄴ ServletWebServerFactoryAutoConfiguration.class -> 서블릿 웹서버 생성 <br>
-    ㄴ DispatcherServletAutoConfigure.class -> 서블릿 만들고 등록
-    - 스프링 부트가 실행되면 자동으로 톰캣 객체를 생성하고, 서블릿이 추가가 되고 Web MVC 설정이 되면서 어플리케이션이 동작한다.
+- 다만 별도의 서블릿들을 다 정의해야 되기 때문에 위 코드 과정을 자동 설정하고 실행하게 해주는 것이 스프링 부트의 기능 중 하나이다.
+- 그렇다면 위 소스코드 처럼 WAS 설정은 어디에 있고 어떤 원리로 스프링 부트가 실행할 수 있는건가?
+    - 위에서 배웠던 @AutoConfiguration 를 통해 자동 설정이 된다.
+    - Library org.springframework.boot:spring-boot-autoconfigure/META-INF/spring.factories
+        - ServletWebServerFactoryAutoConfiguration.class -> 서블릿 웹서버 생성
+            - ServletWebServerFactoryConfiguration
+            - TomcatServletWebServerFactory.getWebServer() -> 톰캣 설정
+            - TomcatServletWebServerFactoryCustomizer -> 톰캣 커스터마이징
+        - DispatcherServletAutoConfigure.class -> 서블릿 만들고 등록
+            - 내부에서 HttpServlet 을 상속받은 DispatcherServlet 을 생성하고 서블릿 컨테이너에 등록
+    - 서블릿 컨테이너와 디스패처 서블릿 등록이 별도로 분리되어 있는 이유는
+        - **서블릿 컨테이너는 설정에 따라 달라질 수 있지만, 서블릿은 변하지 않기에**
+        - **디스패처 서블릿이 어떤 서블릿 컨테이너를 사용하든 상관 없이 서블릿을 등록할 수 있도록 분리**
+    - 스프링 부트가 실행되면 자동으로 톰캣 객체를 생성하고, 내장 서블릿 컨테이너(톰캣)에 서블릿이 추가가 되고 Web MVC 설정이 되면서 어플리케이션이 동작한다.
     
 <br>
 
@@ -155,7 +168,8 @@ org.springframework.boot:spring-boot-autoconfigure Library 안의 META-INF/sprin
 - 프로퍼티 설정을 통해 포트 변경 및 랜덤 포트로 변경할 수 있다.
     - server.port = 8081
     - server.port = 0 // 랜덤 포트
-    
+    - ApplicationListener&lt;ServletWebServerInitializedEvent&gt;를 통해 현재 포트를 얻어올 수 있다.
+
 
 
 
